@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Color Palette Generator</title>
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    #theme-name {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .palette {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .color {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .color:hover {
+      transform: scale(1.05);
+    }
+
+    .hex {
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #333;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <body>
+  <h1>🎨 Color Palette Generator</h1>
+  <div id="theme-name">Theme: </div>
+  <div id="instruction" style="margin-bottom: 15px; font-size: 14px; color: #555;">
+    👉 Click on a color to copy the hex code to clipboard
+  </div>
+  <div class="palette" id="palette"></div>
+  <button onclick="generatePalette()">Generate New Palette</button>
+</body>
+
+
+  <script>
+    const themes = {
+      "Cupcake": ["#FFB7C5", "#FFD1DC", "#FFE5EC", "#FFACC2", "#FF89A8"],
+      "Ocean Breeze": ["#0096C7", "#00B4D8", "#48CAE4", "#90E0EF", "#CAF0F8"],
+      "Sunset": ["#FF9E80", "#FF6E40", "#FF3D00", "#DD2C00", "#BF360C"],
+      "Forest": ["#2E7D32", "#388E3C", "#43A047", "#4CAF50", "#66BB6A"],
+      "Lavender": ["#E1BEE7", "#CE93D8", "#BA68C8", "#AB47BC", "#9C27B0"],
+      "Mint": ["#B2DFDB", "#80CBC4", "#4DB6AC", "#26A69A", "#009688"],
+      "Warm Sand": ["#FFF3E0", "#FFE0B2", "#FFCC80", "#FFB74D", "#FFA726"],
+      "Skyline": ["#82B1FF", "#448AFF", "#2979FF", "#2962FF", "#1E88E5"]
+    };
+
+    function generatePalette() {
+      const paletteDiv = document.getElementById("palette");
+      const themeNameDiv = document.getElementById("theme-name");
+      paletteDiv.innerHTML = "";
+
+      const themeNames = Object.keys(themes);
+      const randomTheme = themeNames[Math.floor(Math.random() * themeNames.length)];
+      const colors = themes[randomTheme];
+
+      themeNameDiv.textContent = "Theme: " + randomTheme;
+
+      colors.forEach(color => {
+        const div = document.createElement("div");
+        div.className = "color";
+        div.style.backgroundColor = color;
+        div.innerHTML = `<div class="hex">${color}</div>`;
+        div.onclick = () => {
+          navigator.clipboard.writeText(color);
+          alert(`${color} copied!`);
+        };
+        paletteDiv.appendChild(div);
+      });
+    }
+
+    generatePalette();
+  </script>
+</body>
+</html>
